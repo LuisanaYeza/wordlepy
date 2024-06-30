@@ -1,9 +1,24 @@
 let intentos = 6;
 //let palabra = "APPLE";
 
-let listapalabra = ["CASAS","MONTE","PIEZA", "GLOBO"];
+/*let listapalabra = ["CASAS","MONTE","PIEZA", "GLOBO"];
 let posicion = Math.floor(Math.random()* listapalabra.length);
-let palabra = listapalabra[posicion];
+let palabra = listapalabra[posicion];*/
+let palabra;
+
+fetch("https://random-word.ryanrk.com/api/en/word/random/?length=5")
+     .then(response => response.json())
+     .then(response=> {
+        console.log(response[0].toUpperCase());
+        palabra = response[0].toUpperCase();
+     })
+     .catch(err => {
+        console.log("Ups sucedio un error")
+        let listapalabra = ["CASAS","MONTE","PIEZA", "GLOBO"];
+        let posicion = Math.floor(Math.random()* listapalabra.length);
+        palabra = listapalabra[posicion];
+        console.log(palabra);
+    })
 
 console.log(palabra);
 const BUTTON = document.getElementById("guess-button");
@@ -13,6 +28,10 @@ BUTTON.addEventListener("click", intentar);
 function intentar(){
     console.log("click!")
     const intento = leerIntento();
+    if(intento.length !==5){
+        alert("Solo debe ingresar palabras de 5 letras, tampoco se admiten numeros.")
+        return
+    }
     intentos = intentos - 1
     console.log("te quedan", intentos, "intentos");
 
